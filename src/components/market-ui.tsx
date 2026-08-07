@@ -199,3 +199,7 @@ export function Sparkline({ points, up }: { points: number[]; up: boolean }) {
     </svg>
   );
 }
+
+export function sparkTone(up: boolean) {
+  return up ? "text-positive" : "text-negative";
+}
