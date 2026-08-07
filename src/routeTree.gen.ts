@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FundsRouteImport } from './routes/funds'
+import { Route as HoldingsRouteImport } from './routes/holdings'
+import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as PositionsRouteImport } from './routes/positions'
+import { Route as WatchlistRouteImport } from './routes/watchlist'
+import { Route as InstrumentSymbolRouteImport } from './routes/instrument.$symbol'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FundsRoute = FundsRouteImport.update({
+  id: '/funds',
+  path: '/funds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HoldingsRoute = HoldingsRouteImport.update({
+  id: '/holdings',
+  path: '/holdings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PositionsRoute = PositionsRouteImport.update({
+  id: '/positions',
+  path: '/positions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WatchlistRoute = WatchlistRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstrumentSymbolRoute = InstrumentSymbolRouteImport.update({
+  id: '/instrument/$symbol',
+  path: '/instrument/$symbol',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/funds': typeof FundsRoute
+  '/holdings': typeof HoldingsRoute
+  '/orders': typeof OrdersRoute
+  '/positions': typeof PositionsRoute
+  '/watchlist': typeof WatchlistRoute
+  '/instrument/$symbol': typeof InstrumentSymbolRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/funds': typeof FundsRoute
+  '/holdings': typeof HoldingsRoute
+  '/orders': typeof OrdersRoute
+  '/positions': typeof PositionsRoute
+  '/watchlist': typeof WatchlistRoute
+  '/instrument/$symbol': typeof InstrumentSymbolRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/funds': typeof FundsRoute
+  '/holdings': typeof HoldingsRoute
+  '/orders': typeof OrdersRoute
+  '/positions': typeof PositionsRoute
+  '/watchlist': typeof WatchlistRoute
+  '/instrument/$symbol': typeof InstrumentSymbolRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/funds'
+    | '/holdings'
+    | '/orders'
+    | '/positions'
+    | '/watchlist'
+    | '/instrument/$symbol'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/funds'
+    | '/holdings'
+    | '/orders'
+    | '/positions'
+    | '/watchlist'
+    | '/instrument/$symbol'
+  id:
+    | '__root__'
+    | '/'
+    | '/funds'
+    | '/holdings'
+    | '/orders'
+    | '/positions'
+    | '/watchlist'
+    | '/instrument/$symbol'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FundsRoute: typeof FundsRoute
+  HoldingsRoute: typeof HoldingsRoute
+  OrdersRoute: typeof OrdersRoute
+  PositionsRoute: typeof PositionsRoute
+  WatchlistRoute: typeof WatchlistRoute
+  InstrumentSymbolRoute: typeof InstrumentSymbolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +130,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/funds': {
+      id: '/funds'
+      path: '/funds'
+      fullPath: '/funds'
+      preLoaderRoute: typeof FundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/holdings': {
+      id: '/holdings'
+      path: '/holdings'
+      fullPath: '/holdings'
+      preLoaderRoute: typeof HoldingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/positions': {
+      id: '/positions'
+      path: '/positions'
+      fullPath: '/positions'
+      preLoaderRoute: typeof PositionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/watchlist': {
+      id: '/watchlist'
+      path: '/watchlist'
+      fullPath: '/watchlist'
+      preLoaderRoute: typeof WatchlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/instrument/$symbol': {
+      id: '/instrument/$symbol'
+      path: '/instrument/$symbol'
+      fullPath: '/instrument/$symbol'
+      preLoaderRoute: typeof InstrumentSymbolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FundsRoute: FundsRoute,
+  HoldingsRoute: HoldingsRoute,
+  OrdersRoute: OrdersRoute,
+  PositionsRoute: PositionsRoute,
+  WatchlistRoute: WatchlistRoute,
+  InstrumentSymbolRoute: InstrumentSymbolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
