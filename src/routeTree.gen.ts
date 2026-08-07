@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as HoldingsRouteImport } from './routes/holdings'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PositionsRouteImport } from './routes/positions'
+import { Route as WatchlistRouteImport } from './routes/watchlist'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const PositionsRoute = PositionsRouteImport.update({
   path: '/positions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WatchlistRoute = WatchlistRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/holdings': typeof HoldingsRoute
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
+  '/watchlist': typeof WatchlistRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/holdings': typeof HoldingsRoute
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
+  '/watchlist': typeof WatchlistRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/holdings': typeof HoldingsRoute
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
+  '/watchlist': typeof WatchlistRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/holdings' | '/orders' | '/positions'
+  fullPaths: '/' | '/holdings' | '/orders' | '/positions' | '/watchlist'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/holdings' | '/orders' | '/positions'
-  id: '__root__' | '/' | '/holdings' | '/orders' | '/positions'
+  to: '/' | '/holdings' | '/orders' | '/positions' | '/watchlist'
+  id: '__root__' | '/' | '/holdings' | '/orders' | '/positions' | '/watchlist'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   HoldingsRoute: typeof HoldingsRoute
   OrdersRoute: typeof OrdersRoute
   PositionsRoute: typeof PositionsRoute
+  WatchlistRoute: typeof WatchlistRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PositionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/watchlist': {
+      id: '/watchlist'
+      path: '/watchlist'
+      fullPath: '/watchlist'
+      preLoaderRoute: typeof WatchlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   HoldingsRoute: HoldingsRoute,
   OrdersRoute: OrdersRoute,
   PositionsRoute: PositionsRoute,
+  WatchlistRoute: WatchlistRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
