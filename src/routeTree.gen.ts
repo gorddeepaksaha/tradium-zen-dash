@@ -15,6 +15,7 @@ import { Route as HoldingsRouteImport } from './routes/holdings'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
+import { Route as InstrumentSymbolRouteImport } from './routes/instrument.$symbol'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const WatchlistRoute = WatchlistRouteImport.update({
   path: '/watchlist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InstrumentSymbolRoute = InstrumentSymbolRouteImport.update({
+  id: '/instrument/$symbol',
+  path: '/instrument/$symbol',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
   '/watchlist': typeof WatchlistRoute
+  '/instrument/$symbol': typeof InstrumentSymbolRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
   '/watchlist': typeof WatchlistRoute
+  '/instrument/$symbol': typeof InstrumentSymbolRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,13 +79,27 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
   '/watchlist': typeof WatchlistRoute
+  '/instrument/$symbol': typeof InstrumentSymbolRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/funds' | '/holdings' | '/orders' | '/positions' | '/watchlist'
+    | '/'
+    | '/funds'
+    | '/holdings'
+    | '/orders'
+    | '/positions'
+    | '/watchlist'
+    | '/instrument/$symbol'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/funds' | '/holdings' | '/orders' | '/positions' | '/watchlist'
+  to:
+    | '/'
+    | '/funds'
+    | '/holdings'
+    | '/orders'
+    | '/positions'
+    | '/watchlist'
+    | '/instrument/$symbol'
   id:
     | '__root__'
     | '/'
@@ -86,6 +108,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/positions'
     | '/watchlist'
+    | '/instrument/$symbol'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,6 +118,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRoute
   PositionsRoute: typeof PositionsRoute
   WatchlistRoute: typeof WatchlistRoute
+  InstrumentSymbolRoute: typeof InstrumentSymbolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -141,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchlistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/instrument/$symbol': {
+      id: '/instrument/$symbol'
+      path: '/instrument/$symbol'
+      fullPath: '/instrument/$symbol'
+      preLoaderRoute: typeof InstrumentSymbolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -151,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRoute,
   PositionsRoute: PositionsRoute,
   WatchlistRoute: WatchlistRoute,
+  InstrumentSymbolRoute: InstrumentSymbolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
