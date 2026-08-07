@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FundsRouteImport } from './routes/funds'
 import { Route as HoldingsRouteImport } from './routes/holdings'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PositionsRouteImport } from './routes/positions'
@@ -18,6 +19,11 @@ import { Route as WatchlistRouteImport } from './routes/watchlist'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FundsRoute = FundsRouteImport.update({
+  id: '/funds',
+  path: '/funds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HoldingsRoute = HoldingsRouteImport.update({
@@ -43,6 +49,7 @@ const WatchlistRoute = WatchlistRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/funds': typeof FundsRoute
   '/holdings': typeof HoldingsRoute
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/funds': typeof FundsRoute
   '/holdings': typeof HoldingsRoute
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/funds': typeof FundsRoute
   '/holdings': typeof HoldingsRoute
   '/orders': typeof OrdersRoute
   '/positions': typeof PositionsRoute
@@ -65,14 +74,23 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/holdings' | '/orders' | '/positions' | '/watchlist'
+  fullPaths:
+    '/' | '/funds' | '/holdings' | '/orders' | '/positions' | '/watchlist'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/holdings' | '/orders' | '/positions' | '/watchlist'
-  id: '__root__' | '/' | '/holdings' | '/orders' | '/positions' | '/watchlist'
+  to: '/' | '/funds' | '/holdings' | '/orders' | '/positions' | '/watchlist'
+  id:
+    | '__root__'
+    | '/'
+    | '/funds'
+    | '/holdings'
+    | '/orders'
+    | '/positions'
+    | '/watchlist'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FundsRoute: typeof FundsRoute
   HoldingsRoute: typeof HoldingsRoute
   OrdersRoute: typeof OrdersRoute
   PositionsRoute: typeof PositionsRoute
@@ -86,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/funds': {
+      id: '/funds'
+      path: '/funds'
+      fullPath: '/funds'
+      preLoaderRoute: typeof FundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/holdings': {
@@ -121,6 +146,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FundsRoute: FundsRoute,
   HoldingsRoute: HoldingsRoute,
   OrdersRoute: OrdersRoute,
   PositionsRoute: PositionsRoute,
