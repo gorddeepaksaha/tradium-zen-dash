@@ -309,7 +309,8 @@ export function buildSeries(seed: number, base: number, range: Range) {
     v = v * (1 + cfg.drift + (rnd() - 0.5) * cfg.vol);
     out.push({ t: i, label: labelFor(range, i, cfg.points), value: Number(v.toFixed(2)) });
   }
-  out[out.length - 1] = { ...out[out.length - 1], value: Number(base.toFixed(2)) };
+  const lastPoint = out[out.length - 1]!;
+  out[out.length - 1] = { ...lastPoint, value: Number(base.toFixed(2)) };
   return out;
 }
 
@@ -318,10 +319,10 @@ function labelFor(range: Range, i: number, n: number) {
     const minutes = 570 + Math.round((i / (n - 1)) * 390);
     return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
   }
-  if (range === "1W") return ["Mon", "Tue", "Wed", "Thu", "Fri"][Math.floor((i / n) * 5)];
+  if (range === "1W") return ["Mon", "Tue", "Wed", "Thu", "Fri"][Math.floor((i / n) * 5)] ?? "Fri";
   if (range === "1M") return `${Math.max(1, Math.round((i / (n - 1)) * 30))} Oct`;
   const months = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
-  if (range === "1Y") return months[Math.min(11, Math.floor((i / n) * 12))];
+  if (range === "1Y") return months[Math.min(11, Math.floor((i / n) * 12))] ?? "Oct";
   return `${2019 + Math.floor((i / n) * 8)}`;
 }
 
@@ -347,7 +348,7 @@ export function buildCandles(seed: number, base: number, range: Range): Candle[]
     });
     price = close;
   }
-  const last = out[out.length - 1];
+  const last = out[out.length - 1]!;
   out[out.length - 1] = {
     ...last,
     close: +base.toFixed(2),
