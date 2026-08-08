@@ -124,19 +124,22 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isLanding = pathname === "/";
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col bg-background text-foreground selection:bg-accent/10">
-        <TopNav />
+        {!isLanding && <TopNav />}
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <div className="flex-1">
           <Outlet />
         </div>
-        <SiteFooter />
+        {!isLanding && <SiteFooter />}
       </div>
       <Toaster />
     </QueryClientProvider>
   );
 }
+
 
