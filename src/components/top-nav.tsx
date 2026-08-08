@@ -23,7 +23,7 @@ export function TopNav() {
               <Link
                 key={l.to}
                 to={l.to}
-                activeOptions={{ exact: l.to === "/" }}
+                activeOptions={{ exact: true }}
                 activeProps={{ className: "text-foreground" }}
                 inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
                 className="transition-colors"
