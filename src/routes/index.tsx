@@ -50,7 +50,7 @@ function LandingPage() {
     <div className="min-h-screen bg-background">
       <MarketingNav />
       <main>
-        <h1 className="sr-only">Tradium — capital management, designed for focus</h1>
+        
         <HeroMosaic />
         <TickerStrip />
         <FeatureCards />
