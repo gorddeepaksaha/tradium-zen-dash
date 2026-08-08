@@ -1,13 +1,14 @@
 import { Link } from "@tanstack/react-router";
 
 const links = [
-  { to: "/", label: "Dashboard" },
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/holdings", label: "Holdings" },
   { to: "/positions", label: "Positions" },
   { to: "/orders", label: "Orders" },
   { to: "/watchlist", label: "Watchlist" },
   { to: "/funds", label: "Funds" },
 ] as const;
+
 
 export function TopNav() {
   return (
