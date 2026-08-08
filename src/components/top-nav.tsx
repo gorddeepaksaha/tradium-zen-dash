@@ -1,13 +1,14 @@
 import { Link } from "@tanstack/react-router";
 
 const links = [
-  { to: "/", label: "Dashboard" },
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/holdings", label: "Holdings" },
   { to: "/positions", label: "Positions" },
   { to: "/orders", label: "Orders" },
   { to: "/watchlist", label: "Watchlist" },
   { to: "/funds", label: "Funds" },
 ] as const;
+
 
 export function TopNav() {
   return (
@@ -22,7 +23,7 @@ export function TopNav() {
               <Link
                 key={l.to}
                 to={l.to}
-                activeOptions={{ exact: l.to === "/" }}
+                activeOptions={{ exact: true }}
                 activeProps={{ className: "text-foreground" }}
                 inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
                 className="transition-colors"
