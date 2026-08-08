@@ -9,7 +9,7 @@ export function TickerStrip() {
       {items.map((i) => (
         <div key={i.symbol} className="num flex items-center gap-3 text-[13px]">
           <span className="font-semibold text-foreground">{i.symbol}</span>
-          <span className="text-muted-foreground">{fmtMoney(i.ltp)}</span>
+          <span className="text-muted-foreground">{fmtMoney(i.price)}</span>
           <span className={toneClass(i.changePct)}>{fmtPct(i.changePct)}</span>
         </div>
       ))}
