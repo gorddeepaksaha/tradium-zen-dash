@@ -10,12 +10,21 @@ export function ClosingCta() {
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
           Open an account in minutes and experience the Tradium terminal.
         </p>
-        <Link
-          to="/dashboard"
-          className="mt-8 inline-flex rounded-lg bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-        >
-          Get started
-        </Link>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link
+            to="/dashboard"
+            className="inline-flex rounded-lg bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            Get started
+          </Link>
+          <Link
+            to="/funds"
+            className="inline-flex rounded-lg border border-border px-8 py-4 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
+            Talk to sales
+          </Link>
+        </div>
+
         <p className="num mt-4 text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
           No minimum balance · Cancel anytime
         </p>
