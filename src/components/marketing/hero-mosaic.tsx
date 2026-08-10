@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import dashboardAsset from "@/assets/app-dashboard.png.asset.json";
 import positionsAsset from "@/assets/app-positions.png.asset.json";
 import fundsAsset from "@/assets/app-funds.png.asset.json";
@@ -13,15 +14,18 @@ function Frame({
   src,
   alt,
   className,
+  offset = 0,
 }: {
   src: string;
   alt: string;
   className?: string;
+  offset?: number;
 }) {
   return (
     <figure
+      style={{ transform: `translate3d(0, ${offset}px, 0)` }}
       className={
-        "group overflow-hidden rounded-xl border border-border bg-surface shadow-[0_12px_40px_-12px_rgba(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_-16px_rgba(0,0,0,0.18)] " +
+        "group overflow-hidden rounded-xl border border-border bg-surface shadow-[var(--shadow-soft)] transition-shadow duration-500 hover:shadow-[var(--shadow-lift)] " +
         (className ?? "")
       }
     >
@@ -30,43 +34,64 @@ function Frame({
         <span className="size-1.5 rounded-full bg-border-strong" />
         <span className="size-1.5 rounded-full bg-border-strong" />
       </div>
-      <img src={src} alt={alt} loading="lazy" className="block w-full" />
+      <img src={src} alt={alt} loading="lazy" className="block w-full dark:brightness-[0.85] dark:contrast-[0.95]" />
     </figure>
   );
 }
 
 export function HeroMosaic() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setScrollY(window.scrollY));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  const drift = Math.min(scrollY, 700);
+
   return (
-    <section className="mx-auto max-w-[1440px] px-6 py-20 lg:px-24 lg:py-28">
+    <section className="relative mx-auto max-w-[1440px] overflow-hidden px-6 py-20 lg:px-24 lg:py-28">
+      <div
+        aria-hidden
+        className="glow-drift pointer-events-none absolute -right-24 -top-32 -z-10 size-[520px] rounded-full bg-accent/10 blur-[120px]"
+      />
       <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
-        <div className="animate-entry max-w-xl">
-          <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-            <span className="size-1.5 rounded-full bg-positive" />
+        <div className="max-w-xl">
+          <span className="animate-entry mb-7 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="size-1.5 animate-pulse rounded-full bg-positive" />
             Trading infrastructure v2.0
           </span>
-          <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-[-0.03em] lg:text-[56px]">
-            Capital management,{" "}
-            <span className="text-accent">designed for focus.</span>
+          <h1 className="animate-entry font-display text-5xl font-bold leading-[1.05] tracking-[-0.03em] [animation-delay:80ms] lg:text-[56px]">
+            Capital management, <span className="text-accent">designed for focus.</span>
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+          <p className="animate-entry mt-6 text-lg leading-relaxed text-muted-foreground [animation-delay:160ms]">
             From portfolio overview to single-stock execution, Tradium gives you a consistent,
             precise interface that gets out of your way.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="animate-entry mt-8 flex flex-wrap gap-4 [animation-delay:240ms]">
             <Link
               to="/dashboard"
-              className="rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[var(--shadow-soft)]"
             >
               Start trading
             </Link>
             <Link
               to="/watchlist"
-              className="rounded-lg border border-border px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-secondary"
+              className="rounded-lg border border-border px-7 py-3.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary"
             >
               Explore markets
             </Link>
           </div>
-          <dl className="mt-12 flex flex-wrap gap-10 border-t border-border pt-6">
+          <dl className="animate-entry mt-12 flex flex-wrap gap-10 border-t border-border pt-6 [animation-delay:320ms]">
             {stats.map((s) => (
               <div key={s.label} className="flex flex-col gap-1">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
@@ -83,14 +108,17 @@ export function HeroMosaic() {
             src={dashboardAsset.url}
             alt="Tradium dashboard showing portfolio value, today's P&L and a performance chart"
             className="col-span-2"
+            offset={drift * -0.03}
           />
           <Frame
             src={positionsAsset.url}
-            alt="Tradium positions screen listing open intraday positions with live P&L"
+            alt="Tradium positions page with open positions and live P&L"
+            offset={drift * -0.07}
           />
           <Frame
             src={fundsAsset.url}
-            alt="Tradium funds screen with available balance, margin utilisation and transactions"
+            alt="Tradium funds page with available balance, used margin and transactions"
+            offset={drift * -0.015}
           />
         </div>
       </div>

@@ -225,7 +225,7 @@ function Dashboard() {
             </div>
           </Sunken>
 
-          <section className="animate-entry relative overflow-hidden rounded-xl bg-foreground p-6 text-background [animation-delay:500ms]">
+          <section className="animate-entry relative overflow-hidden rounded-xl border border-transparent bg-foreground p-6 text-background [animation-delay:500ms] dark:border-border dark:bg-surface-sunken dark:text-foreground">
             <div className="relative z-10">
               <div className="mb-2 flex items-center gap-2">
                 <span className="size-2 animate-pulse rounded-full bg-accent" />

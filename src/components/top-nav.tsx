@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
   { to: "/dashboard", label: "Dashboard" },
@@ -33,6 +34,8 @@ export function TopNav() {
             ))}
           </div>
         </div>
+        <div className="flex items-center gap-3">
+        <ThemeToggle />
         <div className="flex items-center gap-3 rounded-md border border-border bg-surface px-3 py-1 shadow-xs">
           <div className="flex flex-col items-end">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -41,9 +44,10 @@ export function TopNav() {
             <span className="num text-sm">$142,084.50</span>
           </div>
           <div className="h-6 w-px bg-border" />
-          <div className="grid size-7 place-items-center rounded-full bg-secondary text-[10px] font-semibold outline outline-offset-[-1px] outline-black/5">
+          <div className="grid size-7 place-items-center rounded-full bg-secondary text-[10px] font-semibold outline outline-offset-[-1px] outline-border">
             EK
           </div>
+        </div>
         </div>
       </div>
     </nav>

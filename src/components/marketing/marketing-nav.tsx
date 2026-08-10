@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
   { label: "Product", to: "/dashboard" as const },
@@ -7,8 +9,23 @@ const links = [
 ];
 
 export function MarketingNav() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-border bg-background/85 shadow-[var(--shadow-soft)] backdrop-blur-md"
+          : "border-b border-transparent bg-background/40 backdrop-blur-sm"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-24">
         <Link to="/" className="font-display text-xl font-extrabold tracking-tighter">
           Tradium<span className="text-accent">.</span>
@@ -21,6 +38,7 @@ export function MarketingNav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             to="/dashboard"
             className="hidden rounded-lg border border-border px-4 py-2 text-[13px] font-semibold transition-colors hover:bg-secondary sm:inline-flex"

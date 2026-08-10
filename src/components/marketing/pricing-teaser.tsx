@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
+import { Reveal } from "@/hooks/use-in-view";
 
 const tiers = [
   {
@@ -31,7 +32,7 @@ const tiers = [
 export function PricingTeaser() {
   return (
     <section className="mx-auto max-w-[1440px] px-6 py-24 lg:px-24 lg:py-32">
-      <div className="mb-14 max-w-2xl">
+      <Reveal className="mb-14 max-w-2xl">
         <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-accent">Pricing</p>
         <h2 className="font-display text-4xl font-bold tracking-[-0.02em]">
           Simple while you grow.
@@ -39,17 +40,18 @@ export function PricingTeaser() {
         <p className="mt-4 text-lg text-muted-foreground">
           No platform fee to start. Upgrade when real-time data matters.
         </p>
-      </div>
+      </Reveal>
 
       <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
         {tiers.map((t, i) => (
-          <article
+          <Reveal
+            as="article"
             key={t.name}
-            style={{ animationDelay: `${i * 70}ms` }}
-            className={`animate-entry flex flex-col rounded-2xl border bg-surface p-8 ${
+            delay={i * 90}
+            className={`flex flex-col rounded-2xl border bg-surface p-8 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] ${
               t.featured
-                ? "border-accent shadow-[0_20px_60px_-24px_rgba(0,0,0,0.2)]"
-                : "border-border"
+                ? "border-accent shadow-[var(--shadow-frame)] lg:-mt-3 lg:mb-3"
+                : "border-border hover:border-border-strong"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -82,7 +84,7 @@ export function PricingTeaser() {
             >
               {t.cta}
             </Link>
-          </article>
+          </Reveal>
         ))}
       </div>
     </section>
