@@ -34,7 +34,7 @@ function Frame({
         <span className="size-1.5 rounded-full bg-border-strong" />
         <span className="size-1.5 rounded-full bg-border-strong" />
       </div>
-      <img src={src} alt={alt} loading="lazy" className="block w-full" />
+      <img src={src} alt={alt} loading="lazy" className="block w-full dark:brightness-[0.85] dark:contrast-[0.95]" />
     </figure>
   );
 }

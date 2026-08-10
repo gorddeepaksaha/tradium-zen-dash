@@ -171,7 +171,7 @@ export function RangePills<T extends string>({
           className={cn(
             "rounded-md px-3 py-1 text-[11px] font-semibold transition-all",
             v === active
-              ? "bg-surface shadow-sm ring-1 ring-black/5"
+              ? "bg-surface shadow-sm ring-1 ring-border"
               : "text-muted-foreground hover:text-foreground",
           )}
         >

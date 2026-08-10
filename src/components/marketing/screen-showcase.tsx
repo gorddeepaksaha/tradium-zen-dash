@@ -102,7 +102,7 @@ function ShowcaseRow({
           inView ? "is-visible" : ""
         } overflow-hidden rounded-xl border border-border bg-surface shadow-[var(--shadow-frame)] transition-shadow duration-500 hover:shadow-[var(--shadow-lift)]`}
       >
-        <img src={s.img} alt={s.alt} loading="lazy" className="block w-full" />
+        <img src={s.img} alt={s.alt} loading="lazy" className="block w-full dark:brightness-[0.85] dark:contrast-[0.95]" />
       </figure>
     </div>
   );

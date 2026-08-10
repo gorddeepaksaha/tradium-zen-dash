@@ -44,7 +44,7 @@ export function TopNav() {
             <span className="num text-sm">$142,084.50</span>
           </div>
           <div className="h-6 w-px bg-border" />
-          <div className="grid size-7 place-items-center rounded-full bg-secondary text-[10px] font-semibold outline outline-offset-[-1px] outline-black/5">
+          <div className="grid size-7 place-items-center rounded-full bg-secondary text-[10px] font-semibold outline outline-offset-[-1px] outline-border">
             EK
           </div>
         </div>
