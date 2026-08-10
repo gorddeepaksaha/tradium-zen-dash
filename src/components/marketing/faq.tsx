@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Reveal, useInView } from "@/hooks/use-in-view";
 
 export const faqs = [
   {
@@ -33,18 +34,25 @@ export const faqs = [
 ];
 
 export function Faq() {
+  const { ref, inView } = useInView<HTMLDivElement>(0.15);
+
   return (
     <section className="mx-auto max-w-[1440px] px-6 py-24 lg:px-24 lg:py-32">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div className="animate-entry">
+        <Reveal variant="left">
           <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-accent">FAQ</p>
           <h2 className="font-display text-4xl font-bold tracking-[-0.02em]">
             Questions, answered plainly.
           </h2>
-        </div>
-        <Accordion type="single" collapsible className="animate-entry w-full">
-          {faqs.map((f) => (
-            <AccordionItem key={f.q} value={f.q} className="border-border">
+        </Reveal>
+        <Accordion ref={ref} type="single" collapsible className="w-full">
+          {faqs.map((f, i) => (
+            <AccordionItem
+              key={f.q}
+              value={f.q}
+              style={{ transitionDelay: `${i * 70}ms` }}
+              className={`reveal ${inView ? "is-visible" : ""} border-border`}
+            >
               <AccordionTrigger className="text-left text-[15px] font-semibold hover:no-underline">
                 {f.q}
               </AccordionTrigger>
