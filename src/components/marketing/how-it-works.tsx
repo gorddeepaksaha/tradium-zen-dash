@@ -23,7 +23,7 @@ export function HowItWorks() {
 
   return (
     <section className="mx-auto max-w-[1440px] px-6 py-24 lg:px-24 lg:py-32">
-      <div className="reveal-wrapper mb-14 max-w-2xl">
+      <div className="mb-14 max-w-2xl">
         <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-accent">
           How it works
         </p>

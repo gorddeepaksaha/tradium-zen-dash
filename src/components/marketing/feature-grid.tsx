@@ -1,3 +1,4 @@
+import { Reveal } from "@/hooks/use-in-view";
 import {
   LayoutGrid,
   Activity,
@@ -43,7 +44,7 @@ const features = [
 export function FeatureGrid() {
   return (
     <section className="mx-auto max-w-[1440px] px-6 py-24 lg:px-24 lg:py-32">
-      <div className="mb-14 max-w-2xl">
+      <Reveal className="mb-14 max-w-2xl">
         <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-accent">
           Capabilities
         </p>
@@ -53,21 +54,22 @@ export function FeatureGrid() {
         <p className="mt-4 text-lg text-muted-foreground">
           Six tightly built surfaces instead of fifty half-finished ones.
         </p>
-      </div>
+      </Reveal>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {features.map((f, i) => (
-          <article
+          <Reveal
+            as="article"
             key={f.title}
-            className="animate-entry rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_-20px_rgba(0,0,0,0.15)]"
-            style={{ animationDelay: `${i * 60}ms` }}
+            delay={i * 80}
+            className="group rounded-2xl border border-border bg-surface p-7 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-[var(--shadow-soft)]"
           >
-            <span className="mb-5 grid size-10 place-items-center rounded-lg border border-border bg-surface-sunken text-accent">
+            <span className="mb-5 grid size-10 place-items-center rounded-lg border border-border bg-surface-sunken text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105">
               <f.icon size={18} strokeWidth={2} />
             </span>
             <h3 className="font-display text-[19px] font-semibold tracking-[-0.01em]">{f.title}</h3>
             <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
-          </article>
+          </Reveal>
         ))}
       </div>
     </section>

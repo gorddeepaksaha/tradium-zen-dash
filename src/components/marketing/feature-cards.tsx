@@ -23,7 +23,7 @@ export function FeatureCards() {
         {features.map((f, i) => (
           <article
             key={f.label}
-            className="animate-entry rounded-2xl border border-border bg-surface p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_-20px_rgba(0,0,0,0.15)]"
+            className="animate-entry rounded-2xl border border-border bg-surface p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-soft)]"
             style={{ animationDelay: `${i * 80}ms` }}
           >
             <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.15em] text-accent">
