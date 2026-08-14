@@ -4,6 +4,7 @@ import dashboardAsset from "@/assets/app-dashboard.png.asset.json";
 import positionsAsset from "@/assets/app-positions.png.asset.json";
 import fundsAsset from "@/assets/app-funds.png.asset.json";
 import dashboardClip from "@/assets/preview-dashboard.mp4.asset.json";
+import dashboardClipWebm from "@/assets/preview-dashboard.webm.asset.json";
 import { PreviewMedia } from "@/components/marketing/preview-media";
 
 const stats = [
@@ -15,12 +16,14 @@ const stats = [
 function Frame({
   src,
   video,
+  videoWebm,
   alt,
   className,
   offset = 0,
 }: {
   src: string;
   video?: string | undefined;
+  videoWebm?: string | undefined;
   alt: string;
   className?: string;
   offset?: number;
@@ -38,7 +41,7 @@ function Frame({
         <span className="size-1.5 rounded-full bg-border-strong" />
         <span className="size-1.5 rounded-full bg-border-strong" />
       </div>
-      <PreviewMedia video={video} poster={src} alt={alt} />
+      <PreviewMedia video={video} videoWebm={videoWebm} poster={src} alt={alt} />
     </figure>
   );
 }
@@ -112,6 +115,7 @@ export function HeroMosaic() {
           <Frame
             src={dashboardAsset.url}
             video={dashboardClip.url}
+            videoWebm={dashboardClipWebm.url}
             alt="Tradium dashboard showing portfolio value, today's P&L and a performance chart switching time ranges"
             className="col-span-2"
             offset={drift * -0.03}

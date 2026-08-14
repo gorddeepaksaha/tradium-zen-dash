@@ -8,6 +8,8 @@ import watchlistAsset from "@/assets/app-watchlist.png.asset.json";
 import tradeAsset from "@/assets/app-trade.png.asset.json";
 import watchlistClip from "@/assets/preview-watchlist.mp4.asset.json";
 import tradeClip from "@/assets/preview-trade.mp4.asset.json";
+import watchlistClipWebm from "@/assets/preview-watchlist.webm.asset.json";
+import tradeClipWebm from "@/assets/preview-trade.webm.asset.json";
 
 
 
@@ -41,6 +43,7 @@ const screens = [
     cta: "Open watchlist",
     img: watchlistAsset.url,
     video: watchlistClip.url,
+    videoWebm: watchlistClipWebm.url,
     alt: "Tradium watchlist with prices, day change, volume and sparklines",
   },
   {
@@ -53,6 +56,7 @@ const screens = [
     cta: "Open trade screen",
     img: tradeAsset.url,
     video: tradeClip.url,
+    videoWebm: tradeClipWebm.url,
     alt: "Tradium instrument detail page with candlestick chart and buy/sell order panel",
   },
 ];
@@ -109,7 +113,12 @@ function ShowcaseRow({
           inView ? "is-visible" : ""
         } overflow-hidden rounded-xl border border-border bg-surface shadow-[var(--shadow-frame)] transition-shadow duration-500 hover:shadow-[var(--shadow-lift)]`}
       >
-        <PreviewMedia video={"video" in s ? (s.video as string) : undefined} poster={s.img} alt={s.alt} />
+        <PreviewMedia
+          video={"video" in s ? (s.video as string) : undefined}
+          videoWebm={"videoWebm" in s ? (s.videoWebm as string) : undefined}
+          poster={s.img}
+          alt={s.alt}
+        />
       </figure>
     </div>
   );
