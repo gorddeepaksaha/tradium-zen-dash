@@ -1,10 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
+import { PreviewMedia } from "@/components/marketing/preview-media";
 import holdingsAsset from "@/assets/app-holdings.png.asset.json";
 import ordersAsset from "@/assets/app-orders.png.asset.json";
 import watchlistAsset from "@/assets/app-watchlist.png.asset.json";
 import tradeAsset from "@/assets/app-trade.png.asset.json";
+import watchlistClip from "@/assets/preview-watchlist.mp4.asset.json";
+import tradeClip from "@/assets/preview-trade.mp4.asset.json";
+
+
 
 const screens = [
   {
@@ -35,6 +40,7 @@ const screens = [
     to: "/watchlist" as const,
     cta: "Open watchlist",
     img: watchlistAsset.url,
+    video: watchlistClip.url,
     alt: "Tradium watchlist with prices, day change, volume and sparklines",
   },
   {
@@ -46,6 +52,7 @@ const screens = [
     params: { symbol: "NVDA" },
     cta: "Open trade screen",
     img: tradeAsset.url,
+    video: tradeClip.url,
     alt: "Tradium instrument detail page with candlestick chart and buy/sell order panel",
   },
 ];
@@ -102,7 +109,7 @@ function ShowcaseRow({
           inView ? "is-visible" : ""
         } overflow-hidden rounded-xl border border-border bg-surface shadow-[var(--shadow-frame)] transition-shadow duration-500 hover:shadow-[var(--shadow-lift)]`}
       >
-        <img src={s.img} alt={s.alt} loading="lazy" className="block w-full dark:brightness-[0.85] dark:contrast-[0.95]" />
+        <PreviewMedia video={"video" in s ? (s.video as string) : undefined} poster={s.img} alt={s.alt} />
       </figure>
     </div>
   );

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import dashboardAsset from "@/assets/app-dashboard.png.asset.json";
 import positionsAsset from "@/assets/app-positions.png.asset.json";
 import fundsAsset from "@/assets/app-funds.png.asset.json";
+import dashboardClip from "@/assets/preview-dashboard.mp4.asset.json";
+import { PreviewMedia } from "@/components/marketing/preview-media";
 
 const stats = [
   { label: "Average latency", value: "12ms" },
@@ -12,11 +14,13 @@ const stats = [
 
 function Frame({
   src,
+  video,
   alt,
   className,
   offset = 0,
 }: {
   src: string;
+  video?: string | undefined;
   alt: string;
   className?: string;
   offset?: number;
@@ -34,10 +38,11 @@ function Frame({
         <span className="size-1.5 rounded-full bg-border-strong" />
         <span className="size-1.5 rounded-full bg-border-strong" />
       </div>
-      <img src={src} alt={alt} loading="lazy" className="block w-full dark:brightness-[0.85] dark:contrast-[0.95]" />
+      <PreviewMedia video={video} poster={src} alt={alt} />
     </figure>
   );
 }
+
 
 export function HeroMosaic() {
   const [scrollY, setScrollY] = useState(0);
@@ -106,7 +111,8 @@ export function HeroMosaic() {
         <div className="animate-entry grid grid-cols-2 gap-4 [animation-delay:120ms]">
           <Frame
             src={dashboardAsset.url}
-            alt="Tradium dashboard showing portfolio value, today's P&L and a performance chart"
+            video={dashboardClip.url}
+            alt="Tradium dashboard showing portfolio value, today's P&L and a performance chart switching time ranges"
             className="col-span-2"
             offset={drift * -0.03}
           />
