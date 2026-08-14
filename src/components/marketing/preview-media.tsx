@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
-  /** Looping preview video (autoplays, muted, no controls). */
+  /** Looping preview clip (autoplays, muted, no controls). */
   video?: string | undefined;
+  /** VP9/WebM variant for browsers without H.264. */
+  videoWebm?: string | undefined;
   /** Still frame — used as poster and as the reduced-motion / no-video fallback. */
   poster: string;
   alt: string;
@@ -11,9 +13,9 @@ type Props = {
 
 /**
  * Renders a silent looping product clip when motion is allowed, and the
- * static screenshot otherwise. Playback only starts once in view.
+ * static screenshot otherwise. Playback only runs while in view.
  */
-export function PreviewMedia({ video, poster, alt, className = "" }: Props) {
+export function PreviewMedia({ video, videoWebm, poster, alt, className = "" }: Props) {
   const ref = useRef<HTMLVideoElement | null>(null);
   const [motionOk, setMotionOk] = useState(false);
 
@@ -43,14 +45,13 @@ export function PreviewMedia({ video, poster, alt, className = "" }: Props) {
 
   const media = "block w-full dark:brightness-[0.85] dark:contrast-[0.95] " + className;
 
-  if (!video || !motionOk) {
+  if ((!video && !videoWebm) || !motionOk) {
     return <img src={poster} alt={alt} loading="lazy" className={media} />;
   }
 
   return (
     <video
       ref={ref}
-      src={video}
       poster={poster}
       aria-label={alt}
       autoPlay
@@ -59,6 +60,9 @@ export function PreviewMedia({ video, poster, alt, className = "" }: Props) {
       playsInline
       preload="metadata"
       className={media}
-    />
+    >
+      {videoWebm ? <source src={videoWebm} type="video/webm" /> : null}
+      {video ? <source src={video} type="video/mp4" /> : null}
+    </video>
   );
 }
